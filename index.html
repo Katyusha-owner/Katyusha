@@ -3,179 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Связь с катюшой</title>
+    <title>ARKALOG | Неоновая визитка</title>
     <style>
         body {
             margin: 0;
             padding: 0;
+            background-color: #0a0a1a;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
-            background: #000;
+            height: 100vh;
+            cursor: pointer;
+            user-select: none;
         }
         
-        .container {
-            text-align: center;
-            z-index: 10;
-            padding: 40px;
+        .card {
+            position: relative;
+            width: 320px;
+            height: 500px;
+            background: rgba(10, 10, 26, 0.8);
             border-radius: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 50px rgba(0, 255, 255, 0.3);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            animation: container-glow 4s infinite alternate;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2),
+                        0 0 60px rgba(138, 43, 226, 0.2),
+                        0 0 90px rgba(255, 0, 255, 0.2);
+            padding: 30px;
+            box-sizing: border-box;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            overflow: hidden;
+            border: 1px solid rgba(138, 43, 226, 0.5);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ffff, #8a2be2, #ff00ff);
+            z-index: -1;
+            border-radius: 22px;
+            animation: borderGlow 3s linear infinite;
+            background-size: 400%;
+            opacity: 0.7;
+        }
+        
+        @keyframes borderGlow {
+            0% { background-position: 0 0; }
+            50% { background-position: 300% 0; }
+            100% { background-position: 0 0; }
+        }
+        
+        .neon-text {
+            color: #fff;
+            text-shadow: 0 0 10px #00ffff,
+                         0 0 20px #8a2be2,
+                         0 0 30px #ff00ff;
+            text-align: center;
         }
         
         h1 {
-            color: #fff;
-            font-size: 2.8rem;
-            text-shadow: 0 0 15px #0ff, 0 0 30px #0ff;
-            margin-bottom: 40px;
-            animation: text-glow 3s ease-in-out infinite alternate;
+            font-size: 28px;
+            margin-bottom: 5px;
+            animation: textGlow 2s infinite alternate;
         }
         
-        .btn-container {
+        .username {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #00ffff;
+        }
+        
+        .id {
+            font-size: 14px;
+            margin-bottom: 30px;
+            color: #8a2be2;
+        }
+        
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(20, 20, 40, 0.5);
+            border-radius: 10px;
+            border-left: 3px solid #ff00ff;
+            transition: all 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateX(5px);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+        }
+        
+        .section-title {
+            color: #00ffff;
+            font-size: 18px;
+            margin-bottom: 10px;
             display: flex;
-            flex-direction: column;
-            gap: 30px;
+            align-items: center;
         }
         
-        .btn {
-            padding: 20px 40px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            color: white;
+        .section-title::before {
+            content: '✦';
+            margin-right: 8px;
+            color: #ff00ff;
+        }
+        
+        .section-content {
+            color: #e6e6e6;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .link {
+            color: #8a2be2;
             text-decoration: none;
-            text-align: center;
-            letter-spacing: 2px;
-            z-index: 1;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-top: 5px;
         }
         
-        .btn-whatsapp {
-            background: linear-gradient(45deg, #25D366, #128C7E);
-            box-shadow: 0 0 20px #25D366, 0 0 40px rgba(37, 211, 102, 0.5);
+        .link:hover {
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            transform: translateY(-2px);
         }
         
-        .btn-telegram {
-            background: linear-gradient(45deg, #0088cc, #005580);
-            box-shadow: 0 0 20px #0088cc, 0 0 40px rgba(0, 136, 204, 0.5);
+        .price {
+            color: #ff00ff;
+            font-weight: bold;
+            margin-top: 5px;
         }
         
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px currentColor, 0 0 60px currentColor;
-        }
-        
-        .btn:active {
-            transform: scale(0.98);
-        }
-        
-        .btn::before {
-            content: '';
+        .particles {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
-            z-index: -1;
-            transition: all 0.6s ease;
-            opacity: 0;
-        }
-        
-        .btn:hover::before {
-            opacity: 1;
-            animation: btn-shine 1.5s ease;
-        }
-        
-        .space-bg {
-            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
-            overflow: hidden;
+            z-index: -1;
         }
         
-        .star {
+        .particle {
             position: absolute;
-            background: #fff;
+            background: rgba(0, 255, 255, 0.7);
             border-radius: 50%;
-            filter: blur(1px);
-            animation: twinkle var(--duration) infinite ease-in-out;
+            animation: float 15s infinite linear;
         }
         
-        .nebula {
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+        
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 10px #00ffff, 0 0 20px #8a2be2, 0 0 30px #ff00ff; }
+            50% { text-shadow: 0 0 15px #ff00ff, 0 0 25px #00ffff, 0 0 35px #8a2be2; }
+            100% { text-shadow: 0 0 10px #8a2be2, 0 0 20px #ff00ff, 0 0 30px #00ffff; }
+        }
+        
+        .click-animation {
             position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.8), transparent 70%);
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.6;
-            mix-blend-mode: screen;
-            animation: nebula-float var(--duration) infinite linear;
+            pointer-events: none;
+            transform: scale(0);
+            animation: clickEffect 0.5s ease-out;
         }
         
-        .comet {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            filter: blur(1px);
-            box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.8);
-            animation: comet-fly linear infinite;
+        @keyframes clickEffect {
+            to { transform: scale(2); opacity: 0; }
         }
         
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
+        .rotate-animation {
+            animation: rotateCard 1.5s ease;
         }
         
-        @keyframes nebula-float {
-            0% { transform: translate(0, 0); }
-            25% { transform: translate(5%, 5%); }
-            50% { transform: translate(10%, 0); }
-            75% { transform: translate(5%, -5%); }
-            100% { transform: translate(0, 0); }
+        @keyframes rotateCard {
+            0% { transform: rotateY(0) scale(1); }
+            50% { transform: rotateY(180deg) scale(0.9); }
+            100% { transform: rotateY(360deg) scale(1); }
         }
         
-        @keyframes comet-fly {
-            0% {
-                transform: translate(-100vw, -100vh) rotate(45deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(100vw, 100vh) rotate(45deg);
-                opacity: 0;
-            }
+        .pulse-animation {
+            animation: pulse 0.5s ease;
         }
         
-        @keyframes text-glow {
-            0% { text-shadow: 0 0 15px #0ff, 0 0 30px #0ff; }
-            100% { text-shadow: 0 0 25px #0ff, 0 0 50px #0ff, 0 0 75px #0ff; }
-        }
-        
-        @keyframes container-glow {
-            0% { box-shadow: 0 0 50px rgba(0, 255, 255, 0.3); }
-            100% { box-shadow: 0 0 70px rgba(0, 255, 255, 0.6); }
-        }
-        
-        @keyframes btn-shine {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
+    <div class="card" id="card">
+        <div class="particles" id="particles"></div>
+        
+        <div class="neon-text">
+            <h1>Хайтхон</h1>
+            <div class="нация">Уйгурка</div>
+            <div class="id"></div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">Контакты</div>
+            <div class="section-content">
+                Telegram: <a href="tg://user?id=709626545" class="link" target="_blank">нажмите сюда чтобы открыть мой профиль telegram</a><br>
+                WhatsApp: <a href="https://wa.me/79998330343" class="link" target="_blank">нажмите сюда чтобы открыть мой профиль WhatsApp</a><br>
+            </div>
+        </div>
+        
+        <div class="section"> 
+            <div class="section-title">Писать только по делу!</div>
+                
+            </div>
+        </div>
+
+    <script>
+       
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.width = `${Math.random() * 5 + 2}px`;
+            particle.style.height = particle.style.width;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+            particle.style.animationDelay = `${Math.random() * 5}s`;
+            particle.style.opacity = Math.random() * 0.5 + 0.1;
+            particlesContainer.appendChild(particle);
+        }
+        
+       
+        document.addEventListener('click', function(e) {
+            // Эффект клика
+            const clickEffect = document.createElement('div');
+            clickEffect.classList.add('click-animation');
+            clickEffect.style.left = `${e.clientX - 25}px`;
+            clickEffect.style.top = `${e.clientY - 25}px`;
+            document.body.appendChild(clickEffect);
+            
+            setTimeout(() => {
+                clickEffect.remove();
+            }, 500);
+            
+           
+            const card = document.getElementById('card');
+            card.classList.remove('rotate-animation', 'pulse-animation');
+            
+            
+            const animations = ['rotate-animation', 'pulse-animation'];
+            const randomAnim = animations[Math.floor(Math.random() * animations.length)];
+            
+            setTimeout(() => {
+                card.classList.add(randomAnim);
+            }, 10);
+            
+            
+            const colors = ['#00ffff', '#8a2be2', '#ff00ff', '#ff1493', '#7fff00'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            card.style.boxShadow = `0 0 30px ${randomColor}44, 0 0 60px ${randomColor}33, 0 0 90px ${randomColor}22`;
+        });
+        
+        
+        document.addEventListener('mousemove', function(e) {
+            const card = document.getElementById('card');
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+        
+        
+        document.addEventListener('mouseleave', function() {
+            const card = document.getElementById('card');
+            card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        });
+    </script>
+</body>
+</html><body>
     <div class="space-bg" id="spaceBg"></div>
     
     <div class="container">
